@@ -2,7 +2,7 @@
 title: "Exponential Growth COVID 19 in Switzerland"
 author: "Andre Meichtry"
 output:
-  html_document:
+  bookdown::html_document2:
     number_sections: yes 
     self_contained: yes
     toc: yes
@@ -109,9 +109,9 @@ sum(FatKanton,na.rm=TRUE)
 
 + Bei Verdoppelung alle 10 Tage: $2^{t/10}=(2^{1/10})^t=1.07^t$
 
+ 
 
-
-```{r} 
+```{r fig1, fig.cap="Example of doubling times"}
 swisspop<-8e6
 time<-seq(1,60,by=1)
 ##################################################
@@ -136,7 +136,9 @@ lines(time,Y2,lty=2)
 lines(time,Y7,lty=3)
 ## abline(h=swisspop,lty=5,col="red") 
 points(tag,cases,type="l",col="red")
+```
 
+```{r fig2, fig.cap="Example of doubling times, log scale"}
 plot(time,Y1,log="y",type="l",ylab="cases",xlab="days",axes=FALSE)
 at.y <- outer(1:9, 10^(2:9))
 lab.y <- ifelse(log10(at.y) %% 1 == 0, at.y, NA)
@@ -149,13 +151,11 @@ abline(h=swisspop,col="red",lty=2)
 points(tag,cases,type="l",col="red")
 ```
 
- **Example of doubling times: 1 day (solid), 2 days (dashed), 3 days
-      (red), seven days (dotted), with reported cases Covid19 in
-      Switzerland. Horizontal line: swiss population. On a logarithmic
-      scale, a straight line indicates exponential growth.** 
-	  
 
-[Quelle: Johns Hopkins University](https://www.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6)
+
+In Figure \@ref(fig:fig1) and Figure \@ref(fig:fig2), we see different doubling times: 1 day (solid), 2 days
+(dashed), 3 days (red), seven days (dotted), with reported cases
+Covid19 in Switzerland. Horizontal line: swiss population. **On a logarithmic scale, a straight line indicates exponential growth.**
 
 
 
