@@ -22,7 +22,7 @@ knitr::opts_chunk$set(echo = T, out.width="50%",message=F, warning=F, comment=NA
 *The greatest shortcoming of the human race is the inability to
   understand the exponential function. (Al Bartlett)*
 
-#Problem
+# Problem
 
 Sie sitzen zuoberst in einem Fussball-Stadion; es hat Platz für
 $6\times 10^{13}$ Wassertropfen. Es beginnt mit einem Tropfen, der in
@@ -53,7 +53,7 @@ abline(v=t[448],lty=2,col="blue")
 
 
 
-#Exponentialfunktion
+# Exponentialfunktion
 
 **Jede Exponentialfunktion $a^x$ mit $a>1$ wächst ab einem gewissen
 $x$ schneller als jede lineare Funktion $a+bx$**.
@@ -65,7 +65,7 @@ curve(2^x,add=TRUE,lty=3)
 curve(1.2^x,add=TRUE,lty=4)
 ```
 
-#Exponentielles Wachstum
+# Exponentielles Wachstum
 
 
 **Exponential growth** is defined by
@@ -77,7 +77,7 @@ with $t$: time, $\tau$: $e$-folding time, $T$: doubling time, $k$: growth consta
   
 
 
-#Daten Covid-19
+# Daten Covid-19
 
 <https://github.com/openZH/covid_19>
 
@@ -99,7 +99,7 @@ sum(FatKanton,na.rm=TRUE)
 ```
 
 
-#Exponentielles Wachstum Covid-19
+# Exponentielles Wachstum Covid-19
 
 + Bei Verdoppelung alle 2 Tage: $2^{t/2}=(2^{1/2})^t=1.41^t$
 
@@ -156,7 +156,7 @@ points(tag,cases,type="l",col="red")
       scale, a straight line indicates exponential growth.
 [Quelle](https://www.arcgis.com/apps/opsdashboard/index.html\#/bda7594740fd40299423467b48e9ecf6)**.
 
-#Auswirkung Vorfaktor
+# Auswirkung Vorfaktor
 
 
 Annahme: 10 Prozent der Infizierten müssen ins Spital. Die Anzahl Cases von heute sind die
