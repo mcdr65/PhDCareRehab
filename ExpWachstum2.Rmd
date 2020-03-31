@@ -152,7 +152,10 @@ points(tag,cases,type="l",col="red")
  **Example of doubling times: 1 day (solid), 2 days (dashed), 3 days
       (red), seven days (dotted), with reported cases Covid19 in
       Switzerland. Horizontal line: swiss population. On a logarithmic
-      scale, a straight line indicates exponential growth. [Quelle](https://www.arcgis.com/apps/opsdashboard/index.html\#/bda7594740fd40299423467b48e9ecf6)**
+      scale, a straight line indicates exponential growth.** 
+	  
+
+[Quelle: Johns Hopkins University](https://www.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6)
 
 
 
@@ -163,7 +166,6 @@ Anzahl Spitalpatienten in 9 Tagen, **wenn mann nichts macht**.
 
 $0.1\times 2^{0.33t}=0.1\times (2^{0.33})^t=0.1\times
 1.3^t=1.3^{\log_{1.3}0.1}1.3^t=1.3^{t+\log_{1.3}0.1}=1.3^{t-8.776}$
-
 
 Analog kann man zeigen: Wenn die Mortalitätsrate bei einem Prozent der
 bestätigten Fälle liegt, dann ist die Anzahl der bestätigten Fälle
