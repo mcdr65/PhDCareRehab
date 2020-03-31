@@ -302,19 +302,19 @@ sKvent&lt;-split(data$ncumul_vent,data$Kanton)
 CasesKanton&lt;-sapply(sKcases,function(x){x[length(x)]})
 CasesKanton</code></pre>
 <pre><code>  AG   AI   AR   BE   BL   BS   FL   FR   GE   GL   GR   JU   LU   NE   NW   OW 
- 481   14   50  826  539  628   64  477 2375   50  513  122  375  338   63   46 
+ 481   14   50  826  539  628   64  477 2375   53  513  122  375  338   63   46 
   SG   SH   SO   SZ   TG   TI   UR   VD   VS   ZG   ZH 
  394   42  190  141  154 2091   53 3168 1000  114 1874 </code></pre>
 <pre class="r"><code>sum(CasesKanton)</code></pre>
-<pre><code>[1] 16182</code></pre>
+<pre><code>[1] 16185</code></pre>
 <pre class="r"><code>FatKanton&lt;-sapply(sKfatal,function(x){x[length(x)]})
 FatKanton</code></pre>
 <pre><code> AG  AI  AR  BE  BL  BS  FL  FR  GE  GL  GR  JU  LU  NE  NW  OW  SG  SH  SO  SZ 
-  8  NA   2  13   7  16  NA  17  42   1  19  NA   7   6  NA  NA   7  NA   2   4 
+  8  NA   2  13   7  16  NA  17  42   2  19  NA   7   6  NA  NA   7  NA   2   4 
  TG  TI  UR  VD  VS  ZG  ZH 
   3 120  NA  66  26   1  21 </code></pre>
 <pre class="r"><code>sum(FatKanton,na.rm=TRUE)</code></pre>
-<pre><code>[1] 388</code></pre>
+<pre><code>[1] 389</code></pre>
 </div>
 <div id="exponentielles-wachstum-covid-19" class="section level1">
 <h1><span class="header-section-number">5</span> Exponentielles Wachstum Covid-19</h1>
