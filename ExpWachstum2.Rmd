@@ -15,7 +15,7 @@ date: "`r Sys.Date()`"
 
 
 ```{r chunk_setup, include=FALSE, eval=TRUE}
-knitr::opts_chunk$set(echo = T, out.width="50%",message=F, warning=F, comment=NA,
+knitr::opts_chunk$set(echo = TRUE, out.width="50%",message=F, warning=F, comment=NA,
                       eval=T, cache.rebuild=F, cache=F, R.options=list(digits=5,show.signif.stars=FALSE),dev.args=list(bg = 'transparent'))
 ```
 
@@ -35,7 +35,7 @@ bringen, wenn das Stadion noch viel grösser wäre; wir haben
 
 
 
-```{r echo=FALSE}
+```{r }
 max <- 3e06*20e06 ##Volumen Allianz-Arena
 halb <- max/2
 max2<-max*2
@@ -116,7 +116,7 @@ swisspop<-8e6
 time<-seq(1,60,by=1)
 ##################################################
 cases<-c(100,114,214,268,337,374,491,652,652,1100,1359,
-         2200,2200,2650,3000,4100,5300,6600,7500,8800,9900,10900,11800,12900,14100,14800,15900)
+         2200,2200,2650,3000,4100,5300,6600,7500,8800,9900,10900,11800,12900,14100,14800,15900,16600)
 tag<-1:length(cases)
 ##################################################
 T1<-1
@@ -175,7 +175,7 @@ $0.01\times 2^{0.33t}=0.01\times (2^{0.33})^t=0.01\times
 1.3^t=1.3^{\log_{1.3}0.01}1.3^t=1.3^{t+\log_{1.3}0.01}=1.3^{t-17.552}$
 
 
-```{r Ten Percent...}
+```{r }
 delay<-log(0.1)/log(1.3)
 delay
 delay2<-log(0.01)/log(1.3)
@@ -183,6 +183,5 @@ delay2
 plot(time,2^(0.33*time),ylab="cases",xlab="days",type="l",ylim=c(0,10000))
 lines(time,0.1*2^(time/3),lty=2)
 lines(time,0.01*2^(time/3),lty=3)
-
 ```
  
