@@ -4,11 +4,11 @@ author: "Andre Meichtry"
 output:
   html_document:
     number_sections: yes 
-    self_contained: yes
-    toc: yes
-    toc_depth: 3
-    toc_float:
-      collapsed: no
+    #self_contained: yes
+    #toc: yes
+    #toc_depth: 3
+    #toc_float:
+    #  collapsed: no
 date: "`r Sys.Date()`"
 ---
 
