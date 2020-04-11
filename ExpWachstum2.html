@@ -236,9 +236,9 @@ CasesKanton</code></pre>
 <pre><code>  AG   AI   AR   BE   BL   BS   FL   FR   GE   GL   GR   JU   LU   NE   NW   OW 
  822   24   77 1375  722  859   77  796 4271   67  704  182  560  536  100   62 
   SG   SH   SO   SZ   TG   TI   UR   VD   VS   ZG   ZH 
- 632   53  294  249  264 2776   74 4424 1565  168 2929 </code></pre>
+ 632   55  294  249  264 2776   74 4424 1565  168 2929 </code></pre>
 <pre class="r"><code>sum(CasesKanton)</code></pre>
-<pre><code>[1] 24662</code></pre>
+<pre><code>[1] 24664</code></pre>
 </div>
 <div id="deceased" class="section level2">
 <h2><span class="header-section-number">4.2</span> Deceased</h2>
@@ -259,10 +259,10 @@ FatKanton</code></pre>
 <li><p>Bei Verdoppelung alle 7 Tage: <span class="math inline">\(2^{t/7}=(2^{1/7})^t=1.1^t\)</span></p></li>
 <li><p>Bei Verdoppelung alle 10 Tage: <span class="math inline">\(2^{t/10}=(2^{1/10})^t=1.07^t\)</span></p></li>
 </ul>
-<pre class="r"><code>data&lt;-read.csv(&quot;https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv&quot;)
-sw&lt;-data[data$Country.Region==&quot;Switzerland&quot;,-c(1,2,3,4)]
-cases&lt;-as.numeric(sw[-c(1:42)])
-swisspop&lt;-8e6
+<pre class="r"><code>data&lt;-read.csv(&quot;https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv&quot;,check.names=FALSE)
+sw&lt;-data[data$&quot;Country/Region&quot;==&quot;Switzerland&quot;,-c(1,2,3,4)]
+cases&lt;-as.numeric(sw[-c(1:42)])</code></pre>
+<pre class="r"><code>swisspop&lt;-8e6
 time&lt;-seq(1,60,by=1)
 tag&lt;-1:length(cases)
 ##################################################

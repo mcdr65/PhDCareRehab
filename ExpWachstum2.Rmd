@@ -119,10 +119,13 @@ sum(FatKanton,na.rm=TRUE)
 
 
 
-```{r fig.show="hold"} 
-data<-read.csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv")
-sw<-data[data$Country.Region=="Switzerland",-c(1,2,3,4)]
+```{r} 
+data<-read.csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv",check.names=FALSE)
+sw<-data[data$"Country/Region"=="Switzerland",-c(1,2,3,4)]
 cases<-as.numeric(sw[-c(1:42)])
+```
+
+```{r fig.show="hold"} 
 swisspop<-8e6
 time<-seq(1,60,by=1)
 tag<-1:length(cases)
