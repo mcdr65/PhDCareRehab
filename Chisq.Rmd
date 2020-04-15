@@ -34,7 +34,7 @@ prop.table(datatable,2)
 summary(datatable)
 ```
 
-## Datenr in data.frame format
+## Daten in data.frame format
 
 ```{r}
 datadf<-as.data.frame(datatable)
@@ -56,7 +56,7 @@ Unabhängigkeit von Freundlichkeit und Antwortverhalten kann verworfen werden.
 fisher.test(datatable)
 ```
 
-## Als GLM*
+## Als GLM
 
 Dazu brauchen wir die Daten als data.frame.
 GLM (Generalisiertes Lineares Modell) für Poisson-Daten (Mehr dazu in

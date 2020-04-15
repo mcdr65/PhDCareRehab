@@ -1,0 +1,18 @@
+##read.data
+d<-read.csv("HIV.csv")
+c<-read.csv("coding.csv")
+##coding of factors 1
+fvar<-names(d)
+for (i in 11:21) d[,i] <- factor(d[,fvar[i]])
+str(d)
+
+##log.regression
+fit <- glm(aids~ age3 + educ4 + dep + employment + race3 + paindic, family="binomial",data=d)
+fit2 <- glm(aids~ age3 + educ4 + dep + race3 + paindic, family="binomial",data=d)
+
+summary(fit)
+lmtest::waldtest(fit,fit2,test="Chisq")
+
+##for ex. prob. of aids of the first 10 persons
+predict(fit,type="response")[1:10]
+

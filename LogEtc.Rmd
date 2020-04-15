@@ -1,0 +1,69 @@
+---
+title: "Wichtige Funktionen"
+author: "André Meichtry"
+output:
+   html_document:
+    number_sections: yes
+    self_contained: yes
+    toc: yes
+    toc_depth: 3
+    toc_float:
+      collapsed: no
+---
+
+
+```{r chunk_setup, include=FALSE, eval=TRUE}
+knitr::opts_chunk$set(echo = T, message=F, warning=F, comment=NA, autodep=F,
+                      eval=T, cache.rebuild=F, cache=F, R.options=list(width=120),
+                      fig.width=8, fig.align = 'center', dev.args=list(bg = 'transparent'))
+```
+
+# Log Funktion
+
+Die Log-Funktion ist definiert durch 
+
+$$\text{log}(x):\mathbb{R}^+\rightarrow \mathbb{R}$$ 
+
+```{r }
+curve(log(x),from=0,to=10)
+```
+
+
+# Exp Funktion
+
+Die Exp-Funktion ist definiert durch 
+
+$$\text{exp}(x):\mathbb{R} \rightarrow\mathbb{R}^+ $$ 
+
+
+
+```{r }
+curve(exp(x),from=-2,to=2)
+```
+
+
+# Logit Funktion
+
+Es sei $p$ eine Zahl zwischen 0 und 1, $0 \leq p \leq 1$, z.B. eine Wahrscheinlichkeit.  
+Die Logit-Funktion ist definiert durch 
+
+$$\text{logit}(p):[0,1]\rightarrow \mathbb{R},\quad p \mapsto
+\log\frac{p}{1-p}=\log Odds.$$ 
+
+
+
+```{r}
+curve(log(x/(1-x)))
+```
+
+
+# Logistische Funktion
+
+Es sei $p$ eine Zahl zwischen 0 und 1, $0 \leq p \leq 1$, z.B. eine Wahrscheinlichkeit.  
+Die logistische Funktion ist definiert durch 
+
+$$ \text{logistic}(x): \mathbb{R} \rightarrow [0,1],\quad  x \mapsto p=\frac{\exp(x)}{\exp(x)+1}.$$ 
+
+```{r }
+curve(exp(x)/(1+exp(x)),from=-10,to=10)
+```
