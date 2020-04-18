@@ -2,7 +2,7 @@
 title: "Repeated Measures ANOVA"
 author: "André Meichtry"
 output:
-  html_document: 
+   html_document:
     number_sections: yes
     self_contained: yes
     toc: yes

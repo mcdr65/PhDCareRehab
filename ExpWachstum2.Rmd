@@ -97,6 +97,7 @@ sKvent<-split(data$ncumul_vent,data$Kanton)
 CasesKanton<-sapply(sKcases,function(x){x[max(which(!is.na(x)))]})
 CasesKanton
 sum(CasesKanton)
+barplot(CasesKanton,las=2)
 ```
 
 ## Deceased
@@ -104,6 +105,7 @@ sum(CasesKanton)
 FatKanton<-sapply(sKfatal,function(x){x[max(which(!is.na(x)))]})
 FatKanton
 sum(FatKanton,na.rm=TRUE)
+barplot(FatKanton,las=2)
 ```
 
 
