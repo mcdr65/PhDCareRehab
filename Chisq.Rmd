@@ -34,12 +34,6 @@ prop.table(datatable,2)
 summary(datatable)
 ```
 
-## Daten in data.frame format
-
-```{r}
-datadf<-as.data.frame(datatable)
-datadf
-```
 
 # Sind Antwort und Freundlichkeit unabhängig?
 
@@ -58,16 +52,59 @@ fisher.test(datatable)
 
 ## Als GLM
 
-Dazu brauchen wir die Daten als data.frame.
-GLM (Generalisiertes Lineares Modell) für Poisson-Daten (Mehr dazu in
-der Methodenvertiefung).
+Zähldaten kann man mit GLM (Generalisiertes Lineares Modell) anpassen,
+mit Annhame  einer Poisson-Verteilung und log-Link (siehe Theorie Generalisierte
+Lineare Modelle). Dazu brauchen wir die Daten als data.frame.
+
+```{r}
+datadf<-as.data.frame(datatable)
+datadf
+```
 Das reduzierte Modell ohne `Antwort:Freundlichkeit` Interaktionseffekt (entspricht der
 Nullhypothese: Effekt von Antwortverhalten auf die Anzahl ist unabhängig von Freundlichkeit) kann verworfen werden.
 
 ```{r As poisson-Modell}
 modglm<-glm(Freq~Antwort*Freundlichkeit,data=datadf,family="poisson")
 modglm0<-glm(Freq~Antwort+Freundlichkeit,data=datadf,family="poisson")
-anova(modglm,modglm0,test="Chisq")
+anova(modglm,modglm0,test="LRT")
+```
+
+Beim Argument `test` hätten wir statt `LRT` auch `Chisq` schreiben können, das ist äquivalent.
+Wir können die Nullhypothese, dass es keinen Interaktionseffekt, dass
+also `Antwortverhalten`und `Freundlichkeit` unabhängig sind, verwerfen: 
+
+```{r summarPois}
+summary(modglm)
+```
+### Interpretation
+Wir sehen, dass die Residuendevianz dieses Modells Null ist! Das kommt
+daher, dass dieses Modell das saturierte, maximal mögliche Modell ist
+mit gleich vielen Parametern (6) wie Daten (6).
+Der Koeffizient für `Antwortnein`, `r summary(modglm)$coef[2,1]` ist
+**der Unterschied in log-Anzahlen
+zwischen Nein-Sagern und Ja-Sagern** (für Referenzkategorie auf
+Freundlichkeit (freundlich)), also ist `r exp(summary(modglm)$coef[2,1])` das Verhältnis der
+Anzahlen von Nein-Sagern relativ zu Ja-Sagern (für Referenzkategorie auf
+Freundlichkeit (freundlich)). 
+
+R hat als Default-Kodierung sogenannte Treatment-Kontraste, die wir
+schon oft angetroffen haben. Eine alternative Parametrisierung wäre
+die **Means-Parameterisierung**.
+
+```{r Alternative Parametriesierng}
+summary(modglmMeans<-glm(Freq~Antwort:Freundlichkeit-1,data=datadf,family="poisson"))
+
+```
+Wenn wir auf die geschätzten Parameter die Exponentialfunktion anwenden, dann erhalten wir
+gerade die Anzahlen.
+
+```{r }
+as.data.frame(exp(summary(modglmMeans)$coef[,1]))
+```
+
+Möchten wir z.B. Konfidenzintervalle für Anzahlen, ist das zu haben mit
+```{r }
+confint(modglmMeans)
 ```
 
 ## Als LogLineares Modell*
