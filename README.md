@@ -1,6 +1,6 @@
-# StatMod PhD CareRehab
-Quanti2 files for RStudio project
-* `.Rmd` files linear models (Your have the source code, you can adapt text and code, if you want)
+# Stats with R source code
+
+* `.Rmd` files (Your have the source code, you can adapt text and code, if you want)
 * `.html` files (open in Firefox)
 * `.R` files without prose
 
