@@ -285,7 +285,9 @@ i=1,...,n\quad k=1,2\quad j=1,2.$ with
 
 
 ## Simulation
-Let us again simulate some data with an R-function. You need not to understand the code for simulation.
+Let us again simulate some data with an R-function. You need not to
+understand the code for simulation! But if you are interested, you can
+play with.
 
 ```{r }
 RepData2<-function(n=100,mu=100,alpha=3,beta=5,gamma=0,nu=10,tau=5)
