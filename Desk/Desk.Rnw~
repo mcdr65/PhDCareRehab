@@ -1,0 +1,867 @@
+%% \documentclass[11pt]{article}
+%%\usepackage{beamerarticle}
+\documentclass[extsize,handout,10pt]{beamer}
+\usepackage{preambBeamer} %%preambBeamer for presentation (no hyperref, etc.)
+\usepackage{texab} %%Abkürzungen
+
+\mode<article>{\usepackage{}}
+\mode<presentation>{\usetheme{} \usecolortheme{}}
+\setbeamertemplate{footline}[frame number]
+
+
+<<include=FALSE>>=
+library(knitr)
+<<setup,include=FALSE>>=
+opts_chunk$set(dev="pdf",echo=TRUE,fig.path="figures",fig.align="center",
+               background="transparent",out.width=".49\\linewidth",warning=FALSE,
+               tidy=FALSE,size="tiny")
+
+knit_theme$get()##choose a theme
+knit_theme$set("fruit")
+options(width=140)
+library(carData)
+data(package="carData")
+@ 
+
+%\pgfpagesuselayout{4 on 1}[a4paper,border shrink=5mm, landscape]
+\bibliographystyle{alpha}
+
+
+
+\title{Beschreibende Statistik}
+%\subtitle{Beschreibende Statistik mit \textsf{R}}
+\author{André Meichtry\thanks{\WebConsult}}
+%\institute{\G \\ \ZHAW}
+\date{2019}
+%\titlegraphic{\includegraphics[width=.2\textwidth]{/home/meichtry/BERATUNG/zhawD.jpg}}
+
+
+\begin{document}
+
+\selectlanguage{english}
+
+
+
+\maketitle
+\frame{\tableofcontents}
+
+
+
+
+
+\section{Introduction}
+
+
+
+\begin{frame}
+  \frametitle{Statistics}
+  \begin{itemize}
+  \item \alert{Descriptive} statistics
+    \begin{itemize}
+    \item describe data
+    \end{itemize}
+  \item \alert{Inferential} statistics
+    \begin{itemize}
+    \item what is the best guess of the truth, given some data? $\rightarrow${
+        point estimation}
+    \item what is a range of plausible truths, given the data?
+      $\rightarrow${  estimation, confidence intervals}
+    \item is a specific truth plausible? $\rightarrow${ hypothesis testing}
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+
+\section{Univariate data}
+
+\begin{frame}
+  \frametitle{Terminology}
+  \begin{itemize}
+  \item \alert{statistical unit}: one member of a set of entities
+    being studied
+  \item \alert{variable}: quantified aspect of the statistical unit
+  \item \alert{population}: arbitrary defined set of units (with in-
+    and exclusion criteria)
+  \item \alert{sample}: subset of the population, in the ideal case,
+    randomly chosen from the population
+  \end{itemize}
+\end{frame}
+
+
+<<results='hide',echo=FALSE>>=
+options(digits=3,width=120)
+@ 
+    
+    
+
+
+
+\begin{frame}[containsverbatim]
+  \frametitle{Read in data \texttt{read.table()}}
+  Example data \emph{stroke.csv}
+  \begin{itemize}
+    \scriptsize
+  \item 
+<<>>= 
+rm(list=ls())
+mydata  <-  read.csv("https://raw.githubusercontent.com/mcdr65/StatsRsource/master/Data/stroke.csv")
+@ 
+
+<<>>=
+head(mydata)
+@ 
+
+  \normalsize
+  \item for \texttt{Excel}-data: Look at helpfiles
+    \alert{\texttt{?read.table}} and \alert{\texttt{?read.csv}} for further
+    information
+  \item \alert{see preparation exercise!!} 
+  \end{itemize}
+\end{frame}
+
+
+
+\begin{frame}[containsverbatim]
+  \frametitle{Look at data}
+  \small
+Let us look at a simple dataset
+    (\alert{\texttt{chickwts}}) available in the \textsf{R} environment:
+    
+<<>>=
+head(chickwts) ##only the first observations
+@ 
+\end{frame}
+
+
+\begin{frame}[containsverbatim]
+  \frametitle{\texttt{help()}}
+\alert{Very important: help files for \textsf{R}-functions}. 
+
+For example, the help for the function \texttt{median}
+
+<<>>=
+help(median) 
+## or ?median
+@   
+
+\end{frame}
+
+
+\begin{frame}[containsverbatim]
+    \frametitle{Look at object, \texttt{str()}}
+  look at the \alert{structure} of \textsf{R}-objects
+  \small
+  
+<<>>=
+str(chickwts)
+@ 
+
+\end{frame}
+
+
+
+
+\begin{frame}
+  \frametitle{Measurement scales}
+  the \alert{scale} of measurement depends on the \alert{preserved
+    property} during the mapping of the \alert{empirical world} into
+  the \alert{numerical world}:
+  \begin{table}[h]
+    \centering
+    \begin{tabular}{llll}
+      \alert{scale}&\alert{preserves}&\alert{example}&\alert{operations}\\\hline
+      nominal&categories&gender&$=,\neq$\\
+      ordinal&order& independence score&$\leq,\geq$\\
+      interval&equidistance&celcius&$+,-$\\
+      ratio&ratios& kelvin&$\cdot,/$\\
+    \end{tabular}
+    \caption[measurement scales]{measurement scales}
+    \label{tab:Skalenniveaus}
+  \end{table}
+\end{frame}
+
+
+\begin{frame}[containsverbatim]
+  \frametitle{\textsf{R}, creation of new variables}
+
+<<>>=
+##weight in kilograms
+chickwts$weightkg <- chickwts$weight/1000
+str(chickwts)
+@ 
+\end{frame}  
+
+
+\begin{frame}[containsverbatim]
+  \frametitle{Look at first observations, \texttt{head()}}
+<<>>=
+head(chickwts)
+@ 
+\end{frame}
+
+
+
+\begin{frame}
+  \frametitle{Sample}
+  \begin{itemize}
+  \item $n$ \alert{observations} of a \alert{random variable} $X$
+    \begin{equation*}
+      \label{eq:Realisierung von Stichprobenvariablen}
+      X_1=x_1,\quad X_2=x_2,\quad\ldots,\quad X_n=x_n.
+    \end{equation*}
+  \item $n$: sample size
+  \item<2-> $X$: random quantity which is observed $n$-times
+  \item<3-> $X_1,X_2,\ldots,X_{n}$
+    constitutes a \alert{sample}
+  \item<5-> $X$ is \alert{random}, because each unit is viewed as
+    randomly chosen unit from
+    the population
+  \item How many observations has \alert{\texttt{chickwts}}, how many variables
+    has \alert{\texttt{chickwts}}
+  \end{itemize}
+\end{frame}
+    
+
+\begin{frame}
+  \frametitle{Frequencies}
+  \begin{itemize}
+  \item<1-> \alert{absolute frequency} $f$ [$f$: "`frequency"']: The
+    \structure{number} of observations of a \structure{specific value}
+    on the variable $X$
+  \item \alert{relative frequency} $f_{rel}$: The
+    \structure{proportion} of observations that have a
+    \structure{specific value} on the variable $X$
+  \item<2-> \alert{absolute cumulative frequency}: $F$: The
+    \structure{number} of observations that are \structure{smaller or
+      equal} ($\leq$) than a specific value on the variable $X$
+  \item \alert{relative cumulative frequency} $F_{rel}$: The
+    \structure{proportion} of observations that are \structure{smaller
+      or equal} ($\leq$) than a specific value on the variable $X$
+  \end{itemize}
+\end{frame}
+
+
+
+
+\begin{frame}[containsverbatim]
+  \frametitle{Frequency distribution, histogram, \texttt{hist()}}
+
+<<>>=
+hist(chickwts$weightkg,xlab="Gewicht(kg)",freq=FALSE)
+@ 
+
+\end{frame}
+
+
+
+\begin{frame}[containsverbatim]
+  \frametitle{Empirical cumulative distribution, \texttt{ecdf()}}
+<<>>=
+cumfreq<-ecdf(chickwts$weightkg)
+plot(cumfreq,xlab="weight",main="cumul.freq.")
+@ 
+
+\end{frame}
+
+\begin{frame}[containsverbatim]
+  \frametitle{Did we understand \texttt{ecdf()}?}
+<<>>=
+cumfreq(max(chickwts$weightkg))
+cumfreq(median(chickwts$weightkg))
+@
+\end{frame}
+
+
+\begin{frame}[containsverbatim]
+  \frametitle{\texttt{summary()}}
+
+<<>>=
+summary(chickwts)
+@ 
+\end{frame}
+
+
+
+\begin{frame}[containsverbatim]
+  \frametitle{\texttt{boxplot()}}
+<<>>=
+boxplot(weight~feed,data=chickwts,
+        ylab="weight",xlab="feed",las=2)
+@ 
+\end{frame}
+
+
+\begin{frame}[containsverbatim]
+  \frametitle{summary measures of data subsets, \texttt{aggregate()}}
+  \small
+<<>>=
+aggregate(chickwts$weightkg,by=list(chickwts$feed),FUN="summary")
+@ 
+\end{frame}
+
+\begin{frame}[containsverbatim]
+  \frametitle{\texttt{aggregate()}}
+  \small
+<<>>=
+aggregate(chickwts$weight,by=list(chickwts$feed),FUN="quantile")
+@ 
+\end{frame}
+
+
+\begin{frame}[containsverbatim]
+  \frametitle{Summary measures of data subsets, \texttt{split()}}
+  \small
+<<>>=
+subgr <- split(chickwts[,c(1,3)],f=chickwts$feed)
+lapply(subgr,summary)
+@ 
+\end{frame}
+
+
+\begin{frame}[containsverbatim]
+  \frametitle{Kreuztabellen, \texttt{table()}}  
+
+\small
+
+<<>>=
+head(mydata)
+table(mydata[,c(1,5)])
+@   
+\end{frame}
+
+
+
+
+\begin{frame}
+  \frametitle{Boxplot}
+  \begin{itemize}
+  \item<1-> median: \alert{$0.5$-quantile}
+  \item<2-> the box goes from the \alert{$0.25$-quantile} to the
+    \alert{$0.75$-quantile}. This distance is the interquartile range
+    (IQR)
+  \item<3->the lines go to the value of the data point which lies
+    still below of \alert{$0.75$-quantile + 1.5 IQR} resp. above
+    \alert{$0.25$-quantiles - 1.5 IQR}
+  \end{itemize}
+\end{frame}
+
+
+
+
+\begin{frame}[containsverbatim]
+  \frametitle{Quantile: \texttt{quantile()}}
+<<>>=
+quantile(chickwts$weightkg)
+quantile(chickwts$weightkg,prob=c(.33,.66))
+@ 
+\end{frame}
+
+\begin{frame}[containsverbatim]
+  \frametitle{\texttt{summary()}}
+<<>>=
+summary(chickwts)
+table(chickwts$feed)
+@ 
+
+\end{frame}
+
+
+
+
+
+
+\begin{frame}
+  \frametitle{Measures of central tendency/dispersion}
+  \begin{table}[h]
+    \centering\small
+    \begin{tabular}{lccc}
+      \hline
+      measure / scale &nominal&ordinal&metric\\
+      \hline
+      \structure{central tendency}& mode& mode, median &mode, median, mean\\
+      \structure{dispersion}&& range, IQR & $s$,$s^2$\\
+      \hline
+    \end{tabular}
+  \end{table}
+\end{frame}
+
+
+
+\begin{frame}
+  \frametitle{mean, \texttt{mean()}}
+  \begin{itemize}
+  \item<1-> \alert{empirical mean} oder \alert{arithmetic mean}:
+    \begin{equation*}
+      \bar{x}=\frac{x_1+x_2+...+x_n}{n}=\frac{\sum_{i=1}^n{x_i}}{n}
+    \end{equation*}
+  \item $\bar{x}$ is the most frequent measure of central tendency
+  \item<3-> however, $\bar{x}$ is not a \alert{robust} measure of
+    central tendency
+  \item when we do not have metric data, the arithmetic mean gives no
+    sense
+  \end{itemize}
+\end{frame}
+
+
+
+
+\begin{frame}
+  \frametitle{median, \texttt{median()}}
+  \begin{itemize}
+  \item<1-> \alert{median}: makes sense if variable $X$ is at least
+    ordinal scaled
+  \item<2-> to calculate the median, we \alert{order} the values of
+    $X$
+  \item<3-> the median of an \alert{ordered sample} ($x_{(1)},...,x_{(n)}$) of
+    $n$ observations is:
+    \begin{equation*}
+      \text{median}=
+      \begin{cases}
+        0.5(x_{(n/2)}+x_{(n/2+1)})& \text{if }n\text{ even}\\x_{((n+1)/2)} &
+        \text{if } n\text{ uneven}.
+      \end{cases}
+    \end{equation*}
+  \item<4-> this corresponds to the \alert{percentile} $P50$ or to the
+    \alert{quantile} $Q_{.5}$.
+  \item the median is more \alert{robust} with respect to extreme
+    values than the mean $\bar{x}$
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}[containsverbatim]
+  \frametitle{mode}
+  \begin{itemize}
+  \item the \alert{mode} is the value which has the \alert{maximal
+      absolute frequency}
+    \begin{equation*}
+      \label{eq:2}
+      \structure{\text{mode}=\arg \underset{x}{\operatorname{max\,}}f(x)}
+    \end{equation*}
+  \end{itemize}
+there is no \texttt{mode}-function in \textsf{R}. 
+<<>>=
+x <- table(chickwts$feed)
+names(x)[which.max(x)] 
+@ 
+  
+\end{frame}
+
+
+
+
+\begin{frame}
+  \frametitle{Measures of dispersion, \texttt{range(), IQR()}}
+  \begin{itemize}
+  \item<1-> the \alert{range} is the distance between the maximal and
+    the minimal value of a sample: max($X$)-min($X$)
+  \item<2-> the \alert{$p$-quantile} ($0 \leq p \leq 1$) or
+    \alert{$Q_p$} for a random variable $X$ is that value of $X$ which
+    corresponds to $p\cdot{100\%}$ of cumulative frequency. For
+    example, the median \alert{is} the $Q_{0.5}$
+  \item the \alert{interquartil range (IQR)} is the distance between
+    $Q_{.25}$ and $Q_{.75}$. (see boxplot)
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Empirical variance, \texttt{var()}}
+  \begin{itemize}
+  \item the \alert{sample variance} or \alert{empirical variance} is
+    the \alert{mean squared deviation} from the mean of the sample
+  \item<2-> the empirical sample variance $s^2$ is therefore given by
+      \begin{equation*}
+        \structure{s^2=\frac{\sum_{i=1}^n{{(x_i-\bar{x})}^2}}{n-1}}.
+        \label{Stichprobenvarianz}
+      \end{equation*}
+    \end{itemize}
+  \end{frame}
+
+ 
+  \begin{frame}
+    \frametitle{Sample standard deviation, \texttt{sd()}}
+    \begin{itemize}
+    \item<1-> if our variable $X$ was body weight, measured in kg,
+      then the sample variance has as a unit kg$^2$
+    \item to return to the original scale, we take the square root of
+      the variance
+    \item this quantity is known as the \alert{sample standard
+        deviation} or as the \alert{empirical standard deviation} $s$:
+      \begin{equation*}
+        \structure{
+          s=\sqrt{\frac{\sum_{i=1}^n{{(x_i-\bar{x})}^2}}{n-1}}}
+        \label{Standardabweichung}
+      \end{equation*}
+    \end{itemize}
+  \end{frame}
+
+
+
+  \begin{frame}[containsverbatim]
+    \frametitle{Measures of location and dispersion}
+    \scriptsize
+<<>>=
+colMeans(chickwts[,c("weight","weightkg")])
+colMeans(chickwts[,c(1,3)])
+sd(chickwts$weight)
+var(chickwts$weight)
+range(chickwts$weight)
+IQR(chickwts$weight)
+@    
+  \end{frame} 
+ 
+    
+   
+\begin{frame}[containsverbatim]
+  \frametitle{Variable $A$ with $n=200$ observations}
+  \begin{itemize}
+  \item \texttt{rnorm(n,mu,sigma)} \structure{creates $n$ observations from a normal distribution with
+    true mean $\mu$ and true standard deviation $\sigma$}
+  \item 
+
+<<>>=
+A <- rnorm(200,100,20)
+@ 
+
+\item \structure{TASK}: repeat all we have done so far in univariate
+  statistics in \textsf{R} with the variable $A$
+<<include=FALSE>>=
+summary(A)
+mean(A)
+sd(A)
+var(A)
+range(A)
+IQR(A)
+median(A)
+hist(A)
+boxplot(A)
+@ 
+
+
+\item Why the empirical mean (and the empirical SD) is not exactly
+  equal to $\mu=100$ ($\sigma=20$), the \structure{known truth} from simulation 
+\item Why do we all have slightly different results?
+\end{itemize}
+\end{frame}
+  
+  
+
+
+
+  \begin{frame}
+    \frametitle{Standardisation}
+    \begin{itemize}
+    \item<1-> to be able to \alert{compare} deviations from the mean,
+      we can normalise these deviations with the standard deviation of
+      the sample
+    \item<2-> this is the \alert{z-transformation}
+      \begin{equation*}
+        z_i=\frac{x_i-\bar{x}}{s} \qquad    i=1,...,n.
+        \label{zTrans}
+      \end{equation*}
+    \item<3-> the new variable $Z$ has mean 0 and standard deviation 1
+    \item<4-> \structure{the unit} of $Z$ is the standard deviation
+    \end{itemize}
+  \end{frame}
+
+
+
+  \begin{frame}
+    \frametitle{Standardisation}
+    \begin{itemize}
+    \item<1-> for questions like: what is \alert{extreme} or
+      \alert{normal}?
+    \item<2-> if a variable $X$ is approximately normal distributed,
+      then $Z$ is \alert{standard normal distributed} with mean 0 and
+      standard deviation 1
+    \item<3-> we can reduce calculations on $X$ on calculations on $Z$
+    \item<4-> $Z$ is nothing else than \alert{normalized version} von
+      $X$
+    \end{itemize}
+  \end{frame}
+
+  \begin{frame}[containsverbatim]
+    \frametitle{\texttt{scale()}} 
+
+<<>>=
+X <- chickwts$weight 
+Z <- (X-mean(X))/sd(X)
+mean(Z)
+sd(Z)
+Z2 <- scale(X) ## direct version
+@     
+   
+\end{frame} 
+    
+
+
+
+  \begin{frame}[containsverbatim]
+    \frametitle{Quantiles}
+    \begin{itemize}
+    \item<1-> important quantiles of the standard normal distribution
+      \begin{table}[h]
+        \centering
+        \begin{tabular}{c|c|c|c|c|c|c}
+          $p$	&	50\%	&	75\%	&	90\%	&	95\%	&	97.5\%	&	99\%\\
+          $z_p$	&	0(median)	&	0.67	&	1.28	&	1.64	&	1.96	&	2.33\\
+        \end{tabular}
+        \caption{quantiles of the $z$-distribution}
+        \label{tab:QuantilenDerZVerteilung}
+      \end{table}
+    \item lets look at some important quantiles of $A$: 
+\scriptsize
+
+
+<<>>=
+quantile(A,c(.5,.9,.95,.975,.99));
+@ 
+\item and the normalized versions
+<<>>=
+z.p <- quantile(scale(A),c(.5,.9,.95,.975,.99))
+z.p
+@
+
+\end{itemize}
+  \end{frame}
+  
+  
+  \begin{frame}[containsverbatim]
+    \frametitle{Quantiles}
+    \begin{itemize}
+    \item<2-> the quantiles of $x_p$ can be obtainend by the the
+      inverse transformation of $z_p$:
+      \begin{equation*}
+        \label{eq:invtransz}
+        x_p=\bar{x}+s\cdot{z_p}
+      \end{equation*}
+    \item 
+\scriptsize
+<<>>=
+x.p <- mean(A)+sd(A)*z.p
+x.p
+@       
+      
+    \item the quantiles of the theoretical standard normal
+      distribution (the table above) can be obtained with \texttt{qnorm()}
+
+<<>>=
+p <-c(.5,.75,.90,.95,.975,.99) 
+qnorm(p) 
+@
+    
+
+\end{itemize}
+  \end{frame}
+
+\scriptsize
+  \begin{frame}[containsverbatim]
+    \frametitle{Intervals of the normal distribution, \texttt{pnorm()}}
+    \begin{itemize}
+    \item<3-> \alert{68\%} of all observations lie in the interval
+      \alert{$\bar{x}\pm{s}$} (or standardised: \alert{$0\pm{1}$})
+    \item<3-> \alert{95\%} of all observations lie in the interval
+      \alert{$\bar{x}\pm 1.96{s}$} (or standardised: \alert{$0\pm{1.96}$})
+    \item<3-> \alert{99\%} of all observations lie in the interval
+      \alert{$\bar{x}\pm 2.6{s}$} (or standardised: \alert{$0\pm{2.6}$})
+    \end{itemize}
+
+<<>>=
+pnorm(1)-pnorm(-1)
+pnorm(1.96)-pnorm(-1.96)
+pnorm(2.58)-pnorm(-2.58)
+@ 
+            
+  \end{frame}
+\normalsize
+
+\section{Bivariate and multivariate data}
+
+
+\begin{frame}
+  \frametitle{Bivariate data}
+  \begin{itemize}
+  \item  \alert{joint distribution} of two variables $X$ und
+    $Y$
+  \item Quantify the \alert{correlation} between two variables $X$ und $Y$
+  \end{itemize}
+\end{frame}
+
+
+
+
+\begin{frame}[containsverbatim]
+  \frametitle{Bivariate data, example}
+  \begin{itemize}
+  \item<3-> $X$: \alert{alcohol concentration} with observations
+    $x_1,x_2,\ldots, x_n$
+  \item $Y$: \alert{reaction time} with observations
+    $y_1,y_2,\ldots, y_n$
+  \item<4-> sample size: $n=9$ \alert{data pairs}
+
+\scriptsize    
+<<>>=
+A <- c(0.00, 0.20, 0.50, 0.70, 1.00, 1.40, 1.80, 2.25, 2.50);
+R <- c(554, 581, 589, 628, 623, 687, 692, 734, 812);
+alc <- data.frame(Alc=A,Rct=R)
+summary(alc)
+@
+    
+\item<5-> univariate description:
+  \begin{itemize}
+  \item $\bar{x}=1.15$ per mill, $s_x=0.894$ per mill
+  \item $\bar{y}=655.56$ ms, $s_y=82.97$ ms
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+
+
+
+\begin{frame}
+  \frametitle{Covariance, \texttt{cov()}}
+  \begin{itemize}
+  \item<1-> do the two variables present covariance?
+  \item<2-> the \alert{covariance} is a generalisation of the variance
+    and can be quantified as:\small
+    \begin{equation*}
+      \widehat{\text{Cov}}(X,Y)=\frac{\sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y})}{n-1}
+      \label{Kovarianz}
+    \end{equation*}
+\normalsize
+  \item<3-> variance is a special case of covariance for the
+    univariate case. (control: set for every $y$ a $x$ in the above formula)
+  \item<4-> in our example the covariance is
+    $\widehat{\text{Cov}}(X,Y)=72.15$
+  \end{itemize}
+\end{frame}
+
+
+
+\begin{frame}
+  \frametitle{Correlation, \texttt{cor()}}
+  \begin{itemize}
+  \item<1-> the size of the covariance is difficult to interpret
+  \item<2-> we standardise the covariance by the sample standard deviations
+    $s_x$ und $s_y$
+  \item this leads to the 
+    \alert{pearson correlation coefficient}:
+\begin{equation*}
+  r_{X,Y}=\frac{\widehat{\text{Cov}}(X,Y)}{s_X\cdot{s_Y}}
+\end{equation*}
+\item<3-> $r$ is a number between -1 and +1 and quantifies the 
+  \alert{size} of the correlation
+\item<4-> the sign gives the \alert{direction} of the correlation
+\item<5-> in our example, we calculate a large correlation, as
+  expected:
+  \structure{$$r_{X,Y}=\frac{72.15}{0.894\cdot{82.97}}=0.973$$}
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}[containsverbatim]
+  \frametitle{\texttt{plot()}}
+ 
+<<>>=
+plot(A,R,main="Reaction time versus Alcohol",
+     xlab="Alc. concentration",ylab="Reaction time")
+@
+
+\end{frame}
+
+\begin{frame}[containsverbatim]
+  \frametitle{built-in data \emph{women}}
+
+<<>>=
+women
+@   
+  
+\end{frame}
+
+
+\begin{frame}[containsverbatim]
+  \frametitle{\texttt{women\$height} and \texttt{women\$weight}}
+  
+<<>>=
+plot(women$height,women$weight,xlab="height",
+     ylab="weight",main="weight versus height")
+@   
+
+\end{frame}
+
+\begin{frame}[containsverbatim]
+  \frametitle{Ausblick Schätzen und Testen:  \texttt{cor.test()}}
+\small
+<<>>=
+cor(women$height,women$weight,method="pearson")
+cor.test(women$height,women$weight)
+@   
+  
+\end{frame}
+
+
+\begin{frame}[containsverbatim]
+  \frametitle{More than two variables, \texttt{pairs()}}
+\scriptsize
+<<>>=
+pairs(swiss)
+@   
+  
+\end{frame}
+
+
+
+\begin{frame}
+  \frametitle{Other correlation techniques}
+  \begin{table}[h]
+  \centering
+  \begin{tabular}{lccc}\hline
+    Y   /   X&intervall&ordinal&dichotom\\\hline
+    \structure{intervall}&pearson&spearman &point-biserial\\
+    \structure{ordinal}&spearman&spearman&biserial\\
+    \structure{dichotom}&point-biserial&biserial&phi-coefficient\\\hline
+  \end{tabular}
+  \caption{correlation techniques}
+  \label{tab: correlation techniques}
+\end{table}
+\end{frame}
+
+
+\begin{frame}
+
+<<results="hide">>=
+citation()
+@ 
+
+To cite R in publications use:
+
+  R Development Core Team (2011). R: A language and environment for
+  statistical computing. R Foundation for Statistical Computing,
+  Vienna, Austria. ISBN 3-900051-07-0, URL http://www.R-project.org/.
+  
+\end{frame}
+
+
+
+% \section{Bibliographie}
+
+
+
+\begin{frame}
+  \frametitle{Bibliographie}
+  \nocite{BortStat2005,Meichtry2017statistik}
+\bibliography{ref}
+
+\end{frame}
+
+
+
+\end{document}
+
+
+
+
+
+
