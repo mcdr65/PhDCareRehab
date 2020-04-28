@@ -1,5 +1,5 @@
 ---
-title: "Exponential Growth COVID 19 in Switzerland"
+title: "COVID 19 in Switzerland"
 author: "Andre Meichtry"
 output:
   html_document:
@@ -25,7 +25,7 @@ knitr::opts_chunk$set(echo =TRUE, out.width="50%",message=F, warning=F, comment=
 # Problem
 
 Sie sitzen zuoberst in einem Fussball-Stadion; es hat Platz für
-$6\times 10^{13}$ Wassertropfen. Es beginnt mit einem Tropfen, der in
+$6\times 10^{13}$ Wassertropfen. Es beginnt zu regnen. Zuerst mit einem Tropfen, der in
 der ersten Minute ins Stadion tröpfelt. Jede Minute *verdoppelt* sich
 die Anzahl Tropfen. Lange passiert nichts Besonderes. Sie sehen die
 Gefahr nicht kommen. Von der *Hälfte* bis *ganz*
@@ -129,7 +129,7 @@ cases<-as.numeric(sw[-c(1:42)])
 
 ```{r fig.show="hold"} 
 swisspop<-8e6
-time<-seq(1,60,by=1)
+time<-seq(1,80,by=1)
 tag<-1:length(cases)
 ##################################################
 T1<-1
