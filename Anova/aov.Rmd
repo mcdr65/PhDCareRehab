@@ -3,8 +3,11 @@
 title: "Analysis of variance ANOVA"
 author: "André Meichtry"
 output:
+  pdf_document:
+    toc: yes
+    toc_depth: '3'
   html_document:
-    number_sections: yes 
+    number_sections: yes
     self_contained: yes
     toc: yes
     toc_depth: 3

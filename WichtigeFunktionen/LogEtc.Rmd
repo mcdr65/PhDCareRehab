@@ -2,7 +2,10 @@
 title: "Wichtige Funktionen"
 author: "André Meichtry"
 output:
-   html_document:
+  pdf_document:
+    toc: yes
+    toc_depth: '3'
+  html_document:
     number_sections: yes
     self_contained: yes
     toc: yes
