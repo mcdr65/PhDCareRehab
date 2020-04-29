@@ -1,7 +1,10 @@
 ---
-title: Beispiel $\chi^2$-Verfahren
-author: André Meichtry
+title: "Verfahren bei Anzahlen"
+author: "André Meichtry"
 output:
+  pdf_document:
+    toc: yes
+    toc_depth: 3
   html_document:
     number_sections: yes
     self_contained: yes
@@ -9,9 +12,6 @@ output:
     toc_depth: 3
     toc_float:
       collapsed: no
-  pdf_document:
-    toc: yes
-    toc_depth: 3
 ---
 
 
