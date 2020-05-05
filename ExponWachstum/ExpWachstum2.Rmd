@@ -3,9 +3,9 @@ title: "COVID 19 in Switzerland"
 author: "Andre Meichtry"
 date: "`r Sys.Date()`"
 output:
+  pdf_document: default
   html_document:
     number_sections: yes
-  pdf_document: default
 ---
 
 
