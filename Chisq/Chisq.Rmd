@@ -88,7 +88,7 @@ Der Koeffizient für `Antwortnein`, `r summary(modglm)$coef[2,1]` ist
 zwischen Nein-Sagern und Ja-Sagern** (für Referenzkategorie auf
 Freundlichkeit (freundlich)), also ist `r exp(summary(modglm)$coef[2,1])` das Verhältnis der
 Anzahlen von Nein-Sagern relativ zu Ja-Sagern (für Referenzkategorie auf
-Freundlichkeit (freundlich)). 
+Freundlichkeit (forsch)). 
 
 R hat als Default-Kodierung sogenannte Treatment-Kontraste, die wir
 schon oft angetroffen haben. Eine alternative Parametrisierung wäre

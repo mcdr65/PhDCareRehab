@@ -1655,7 +1655,7 @@ Residual deviance: 1.3323e-15  on 0  degrees of freedom
 AIC: 37.17
 
 Number of Fisher Scoring iterations: 3</code></pre>
-<p>Interpretation: Wir sehen, dass die Residuendevianz dieses Modells Null ist! Das kommt daher, dass dieses Modell das saturierte, maximal mögliche Modell ist mit gleich vielen Parametern (6) wie Daten (6). Der Koeffizient für <code>Antwortnein</code>, 0.1431008 ist <strong>der Unterschied in log-Anzahlen zwischen Nein-Sagern und Ja-Sagern</strong> (für Referenzkategorie auf Freundlichkeit (freundlich)), also ist 1.1538462 das Verhältnis der Anzahlen von Nein-Sagern relativ zu Ja-Sagern (für Referenzkategorie auf Freundlichkeit (freundlich)).</p>
+<p>Interpretation: Wir sehen, dass die Residuendevianz dieses Modells Null ist! Das kommt daher, dass dieses Modell das saturierte, maximal mögliche Modell ist mit gleich vielen Parametern (6) wie Daten (6). Der Koeffizient für <code>Antwortnein</code>, 0.1431008 ist <strong>der Unterschied in log-Anzahlen zwischen Nein-Sagern und Ja-Sagern</strong> (für Referenzkategorie auf Freundlichkeit (freundlich)), also ist 1.1538462 das Verhältnis der Anzahlen von Nein-Sagern relativ zu Ja-Sagern (für Referenzkategorie auf Freundlichkeit (forsch)).</p>
 <p>R hat als Default-Kodierung sogenannte Treatment-Kontraste, die wir schon oft angetroffen haben. Eine alternative Parametrisierung wäre die <strong>Means-Parameterisierung</strong>.</p>
 <pre class="r"><code>summary(modglmMeans&lt;-glm(Freq~Antwort:Freundlichkeit-1,data=datadf,family=&quot;poisson&quot;))</code></pre>
 <pre><code>
