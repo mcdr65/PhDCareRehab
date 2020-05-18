@@ -1613,6 +1613,11 @@ datadf</code></pre>
 4    nein         forsch   22
 5      ja       sachlich    5
 6    nein       sachlich   19</code></pre>
+<pre class="r"><code>str(datadf)</code></pre>
+<pre><code>&#39;data.frame&#39;:   6 obs. of  3 variables:
+ $ Antwort       : Factor w/ 2 levels &quot;ja&quot;,&quot;nein&quot;: 1 2 1 2 1 2
+ $ Freundlichkeit: Factor w/ 3 levels &quot;freundlich&quot;,&quot;forsch&quot;,..: 1 1 2 2 3 3
+ $ Freq          : num  13 15 3 22 5 19</code></pre>
 <p>Das reduzierte Modell ohne <code>Antwort:Freundlichkeit</code> Interaktionseffekt (entspricht der Nullhypothese: Effekt von Antwortverhalten auf die Anzahl ist unabhängig von Freundlichkeit) kann verworfen werden.</p>
 <pre class="r"><code>modglm&lt;-glm(Freq~Antwort*Freundlichkeit,data=datadf,family=&quot;poisson&quot;)
 modglm0&lt;-glm(Freq~Antwort+Freundlichkeit,data=datadf,family=&quot;poisson&quot;)
