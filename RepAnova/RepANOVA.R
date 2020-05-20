@@ -1,7 +1,4 @@
 ## ----chunk_setup, include=FALSE, eval=TRUE------------------------------------
-knitr::opts_chunk$set(echo = T, out.width="49%",message=F, warning=F, comment=NA,
-                      eval=T, cache.rebuild=F, cache=F, R.options=list(width=200,digits=3,show.signif.stars=FALSE),dev.args=list(bg = 'transparent'))
-
 
 ## ----needed,echo=TRUE,results="hide"------------------------------------------
 library(lme4)
@@ -10,7 +7,7 @@ library(psych)
 library(ggplot2)
 
 
-## -----------------------------------------------------------------------------
+## ----include=FALSE------------------------------------------------------------
 RepData<-function(n=30,I=2,mu=20,alpha=runif(I-1,mu/2,mu),nu=10,tau=5)
 {
     N<-n*I ##observations
@@ -29,18 +26,20 @@ RepData<-function(n=30,I=2,mu=20,alpha=runif(I-1,mu/2,mu),nu=10,tau=5)
 }    
 
 
-## -----------------------------------------------------------------------------
+## ----include=FALSE------------------------------------------------------------
 tmp<-RepData() ##with default arguments
 d.long2<-tmp$data
 parms<-tmp$parameters
 
 
-## -----------------------------------------------------------------------------
+## ----include=FALSE------------------------------------------------------------
 parms
 
 
 ## -----------------------------------------------------------------------------
+headTail(d.long2)
 aggregate(response~time,data=d.long2,summary)
+describeBy(d.long2$response,group=d.long2$time,mat=TRUE,skew=FALSE)
 with(d.long2,interaction.plot(time,subject,response))
 
 
@@ -99,7 +98,13 @@ lmm1<-lmer(response~time+(1|subject), data=d.long2)
 summary(lmm1,cor=FALSE)
 
 
-## -----------------------------------------------------------------------------
+## ----echo=FALSE---------------------------------------------------------------
+v<- as.data.frame(VarCorr(lmm1))
+v$percent<-v$vcov/sum(v$vcov)
+v$percent[1]
+
+
+## ----include=FALSE------------------------------------------------------------
 parms
 
 
@@ -108,21 +113,28 @@ anova(lmm1)
 plot(lmm1)
 
 
-## -----------------------------------------------------------------------------
+## ----include=FALSE------------------------------------------------------------
 tmp<-RepData(n=50,I=4,mu=20,alpha=c(2,3,4),nu=10,tau=5)
 d.long<-tmp$data
 parms<-tmp$parameters
 
 
-## -----------------------------------------------------------------------------
+## ----include=FALSE------------------------------------------------------------
 parms
+
+
+## -----------------------------------------------------------------------------
+headTail(d.long,7,7)
 
 
 ## ----fig.show="hold"----------------------------------------------------------
 aggregate(response~time,data=d.long,summary)
+describeBy(d.long$response,group=d.long$time,mat=TRUE,skew=FALSE)
+
+
 with(d.long,interaction.plot(time,subject,response))
 p <- ggplot(data = d.long, aes(x = time, y = response, group = subject))
-p <- p+geom_point()+geom_line()+stat_smooth(aes(group = 1),method="lm",se=FALSE)
+p <- p+geom_point()+geom_line()+stat_smooth(aes(group = 1),se=FALSE)
 p <- p + stat_summary(aes(group=1), geom = "point", fun.y = mean,shape = 17, size = 4)
 p
 
@@ -138,11 +150,17 @@ summary(lmm2,cor=FALSE)
 anova(lmm2)
 
 
+## ----echo=FALSE---------------------------------------------------------------
+v<- as.data.frame(VarCorr(lmm2))
+v$percent<-v$vcov/sum(v$vcov)
+v$percent[1]
+
+
 ## -----------------------------------------------------------------------------
 plot(lmm2)
 
 
-## -----------------------------------------------------------------------------
+## ----include=FALSE------------------------------------------------------------
 RepData2<-function(n=100,mu=100,alpha=3,beta=5,gamma=0,nu=10,tau=5)
 {
     N<-n*2 ##observations
@@ -181,6 +199,8 @@ p
 
 ## -----------------------------------------------------------------------------
 aggregate(response~time+group,data=d.longB,summary)
+describeBy(d.longB$response,group=list(d.longB$time,d.longB$group),mat=TRUE,skew=FALSE)
+tableone::CreateTableOne(vars="response",strata=c("group","time"),data=d.longB,test=FALSE)
 
 
 ## -----------------------------------------------------------------------------
@@ -194,7 +214,13 @@ summary(lmm3,cor=FALSE)
 anova(lmm3)
 
 
-## -----------------------------------------------------------------------------
+## ----echo=FALSE---------------------------------------------------------------
+v<- as.data.frame(VarCorr(lmm3))
+v$percent<-v$vcov/sum(v$vcov)
+v$percent[1]
+
+
+## ----include=FALSE------------------------------------------------------------
 parms
 
 

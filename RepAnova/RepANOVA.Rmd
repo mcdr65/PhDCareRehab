@@ -216,6 +216,14 @@ summary(lmm1,cor=FALSE)
 ```
 <!-- Compare to true parameter values: -->
 
+The estimate of the intraclass correlation $\nu^2/\sigma^2$ is
+
+```{r echo=FALSE}
+v<- as.data.frame(VarCorr(lmm1))
+v$percent<-v$vcov/sum(v$vcov)
+v$percent[1]
+```
+
 
 ```{r include=FALSE }
 parms
@@ -277,7 +285,13 @@ lmm2 <- lmer(response~time+(1|subject),data=d.long)
 summary(lmm2,cor=FALSE)
 anova(lmm2)
 ```
+The estimate of the intraclass correlation $\nu^2/\sigma^2$ is
 
+```{r echo=FALSE}
+v<- as.data.frame(VarCorr(lmm2))
+v$percent<-v$vcov/sum(v$vcov)
+v$percent[1]
+```
 
 ```{r }
 plot(lmm2)
@@ -287,7 +301,7 @@ plot(lmm2)
 
 
 
-## One within-subject, one between-subject factor
+## Within- and between-subject factor
 
 A frequent question is the changes of 2 groups from Pre to Post. This
 corresponds to a model with one **within-subject factor time** and one
@@ -302,7 +316,7 @@ i=1,...,n\quad k=1,2\quad j=1,2.$ with
   effect of one predictor depends on the value on the other predictor.)
 
 
-## Example data
+### Example data
 
 <!-- Let us again simulate some data with an R-function. You need not to -->
 <!-- understand the code for simulation! But if you are interested, you can -->
@@ -355,7 +369,7 @@ tableone::CreateTableOne(vars="response",strata=c("group","time"),data=d.longB,t
 ```
 
 
-## As ANOVA
+### As ANOVA
 
 ```{r }
 modelRep3 <-aov(response~time*group+Error(subject/time),data=d.longB) ##+Error(subject) is equivalent
@@ -363,12 +377,22 @@ print(summary(modelRep3),digits=4)
 ```
 
 
-## As LMM
+### As LMM
 
 ```{r }
 lmm3 <- lmer(response~time*group+(1|subject),data=d.longB)
 summary(lmm3,cor=FALSE)
 anova(lmm3)
+```
+
+
+The estimate of the intraclass correlation $\nu^2/\sigma^2$ is
+
+
+```{r echo=FALSE}
+v<- as.data.frame(VarCorr(lmm3))
+v$percent<-v$vcov/sum(v$vcov)
+v$percent[1]
 ```
 
 <!-- Compare to true values -->
@@ -377,7 +401,7 @@ anova(lmm3)
 parms
 ```
 
-## Fitted model 
+### Fitted model* 
 
 ```{r }
 predicted<-predict(lmm3)
@@ -387,7 +411,7 @@ p <- p + stat_smooth(aes(group = 1), method = "lm", se = FALSE) + stat_summary(a
 p
 ```
 
-## Residual analysis
+### Residual analysis
 
 ```{r }
 plot(lmm3)
