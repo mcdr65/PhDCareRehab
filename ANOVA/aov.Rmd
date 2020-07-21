@@ -3,9 +3,6 @@
 title: "Analysis of variance ANOVA"
 author: "André Meichtry"
 output:
-  pdf_document:
-    toc: yes
-    toc_depth: '3'
   html_document:
     number_sections: yes
     self_contained: yes
@@ -13,6 +10,9 @@ output:
     toc_depth: 3
     toc_float:
       collapsed: no
+  pdf_document:
+    toc: yes
+    toc_depth: '3'
 ---
 
 
@@ -26,6 +26,8 @@ knitr::opts_chunk$set(echo = T, out.width="49%",message=F, warning=F, comment=NA
 library(psych)
 library(emmeans)
 ```
+
+
 
 
 # Univariate one-factorial ANOVA
