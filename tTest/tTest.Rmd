@@ -111,7 +111,7 @@ An approximative $100\times (1-\alpha)$\% CI is given by $\bar{x}\pm
   gives  
   
     
-$$n\geq \frac{z^2_{1-\alpha/2}}{(\delta/\sigma)^2}$$.
+$$n\geq \frac{z^2_{1-\alpha/2}}{(\delta/\sigma)^2}$$
  
 Using again  $\hat{\sigma}=`r sigmahat`$:
  
