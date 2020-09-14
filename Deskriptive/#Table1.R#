@@ -1,0 +1,38 @@
+library(psych)
+d.wide1  <-  read.csv("https://raw.githubusercontent.com/mcdr65/StatsRsource/master/Data/Omega.csv")
+load("Juli14.Rdata")
+
+d.wide2<-d.wide
+str(d.wide1)
+str(d.wide2)
+data.frame(names(d.wide))
+BL<- seq(13,187,by=5)
+fact <- c(1,2,3,5,8,11)
+cont <- c(4,6,7,9,10,12)
+tmp<-describeBy(d.wide[,cont],group=d.wide$group,skew=FALSE)
+tmp
+
+tmp2 <- data.frame(Ctrl.Mean=tmp$control$mean,Ctrl.SD=tmp$control$sd,Int.Mean=tmp$intervention$mean,Int.SD=tmp$intervention$sd)
+rownames(tmp2) <- names(d.wide)[cont]
+tmp2
+
+
+###################################################
+### code chunk number 3: Table1.Rnw:91-98
+###################################################
+BL<- seq(13,187,by=5)
+fact <- c(1,2,3,5,8,11)
+cont <- c(4,6,7,9,10)
+tmp<-describeBy(d.wide[,BL],group=d.wide$group,skew=FALSE)
+tmp2 <- data.frame(Ctrl.Mean=tmp$control$mean,Ctrl.SD=tmp$control$sd,Int.Mean=tmp$intervention$mean,Int.SD=tmp$intervention$sd)
+rownames(tmp2) <- names(d.wide)[BL]
+tmp2
+
+
+###################################################
+### code chunk number 4: Table1.Rnw:106-108
+###################################################
+mw.grouped <- split(d.wide[,fact[-3]],f=d.wide$group)
+lapply(mw.grouped,summary)
+
+
