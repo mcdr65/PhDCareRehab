@@ -125,7 +125,7 @@ cases<-as.numeric(sw[-c(1:42)])
 
 ```{r fig.show="hold"} 
 swisspop<-8e6
-time<-seq(1,200,by=1)
+time<-seq(1,100,by=1)
 tag<-1:length(cases)
 ##################################################
 T1<-1
