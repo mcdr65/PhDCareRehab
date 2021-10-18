@@ -63,7 +63,6 @@ curve(1.2^x,add=TRUE,lty=4)
 
 # Exponentielles Wachstum
 
-
 **Exponential growth** is defined by
 
 $$\boxed{x(t)=x_0e^{kt}=x_0e^{t/\tau}=x_02^{t/T}},$$
