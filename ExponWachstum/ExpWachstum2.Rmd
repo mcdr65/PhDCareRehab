@@ -16,7 +16,7 @@ knitr::opts_chunk$set(echo =TRUE, out.width="50%",message=F, warning=F, comment=
 ```
 
 *The greatest shortcoming of the human race is the inability to
-  understand the exponential function. (Al Bartlett)*
+  understand the exponential function. ( Al Bartlett)*
 
 # Problem
 
