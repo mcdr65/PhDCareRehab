@@ -9,7 +9,6 @@ output:
 ---
 
 
-
 ```{r chunk_setup, include=FALSE, eval=TRUE}
 knitr::opts_chunk$set(echo =TRUE, out.width="50%",message=F, warning=F, comment=NA,
                       eval=TRUE, cache.rebuild=F, cache=F, R.options=list(digits=5,show.signif.stars=FALSE),dev.args=list(bg = 'transparent'))
